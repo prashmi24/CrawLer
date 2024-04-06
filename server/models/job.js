@@ -35,12 +35,12 @@ const jobSchema = new mongoose.Schema({
         minLength: [4, "Enter atleast 4 characters."],
         maxLength: [10, "Only 10 chaaracters are allowed."]
     },
-    SalaryFrom:{
+    salaryFrom:{
         type: Number,
         minLength: [4, "Enter atleast 4 characters."],
         maxLength: [10, "Only 10 chaaracters are allowed."]
     },
-    SalaryTo:{
+    salaryTo:{
         type: Number,
         minLength: [4, "Enter atleast 4 characters."],
         maxLength: [10, "Only 10 chaaracters are allowed."]

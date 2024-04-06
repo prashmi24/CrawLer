@@ -39,6 +39,7 @@ export const postJob = catchAsyncError(async(req, res, next)=>{
         );
     }
 
+//Job posted by
     const postedBy =req.user._id;
     const job = await Job.create({
         title, description, category, country, city, location, fixedSalary, salaryFrom, salaryTo, postedBy
