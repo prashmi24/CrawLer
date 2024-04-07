@@ -11,7 +11,7 @@ export const employerGetAllApplications= catchAsyncError(async(req, res, next) =
         return next(new ErrorHandler("Job Seeker is not allowed to access this resources", 400));
     }
     const {_id} = req.user;
-    const applications = await Application.find({'employeeID.user': _id});
+    const applications = await Application.find({'employerID.user': _id});
     res.status(200).json({
        success: true,
        applications 
