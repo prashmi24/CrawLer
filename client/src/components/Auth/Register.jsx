@@ -38,10 +38,9 @@ const Register = () => {
     }
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to={"/"} />;
   }
-
 
   return (
     <>
@@ -49,20 +48,16 @@ const Register = () => {
         <div className="container">
           <div className="header">
             <img src="/logo.png" alt="logo" />
-            <h2>
-            Join as a recruiter, job seeker or hiring manager
-          </h2>
+            <h2>Join as a recruiter, job seeker or hiring manager</h2>
           </div>
           <form>
             <div className="inputTag">
               <label>Register As:</label>
               <div>
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">Select Role</option>
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
-               
               </div>
             </div>
             <div className="inputTag">
@@ -85,7 +80,6 @@ const Register = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                
               </div>
             </div>
             <div className="inputTag">
@@ -97,7 +91,6 @@ const Register = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
-               
               </div>
             </div>
             <div className="inputTag">
@@ -109,17 +102,15 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-             
               </div>
             </div>
-            <button type="submit" onClick={handleRegister} >
+            <button type="submit" onClick={handleRegister}>
               Register
             </button>
             <p>
-            Been here before?
-            <Link to={"/login"}> Login</Link> 
-          </p>
-            
+              Been here before?
+              <Link to={"/login"}> Login</Link>
+            </p>
           </form>
         </div>
         <div className="banner">
@@ -131,4 +122,3 @@ const Register = () => {
 };
 
 export default Register;
-

@@ -1,5 +1,5 @@
 import {catchAsyncError} from '../middlewares/catchAsyncError.js';
-import {User} from '../models/user.js';
+import {User} from '../modals/user.js';
 import ErrorHandler  from '../middlewares/error.js';
 import {sendTokens} from "../utils/jwt.js";
 

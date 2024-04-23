@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 * {
   margin: 0;
@@ -13,7 +13,7 @@
 /* Navbar */
 nav {
   padding: 0px 20px;
-  height: 100px; 
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,18 +37,17 @@ nav .container .logo img {
   width: 50px;
   height: 50px;
 }
-nav .container .logo h1{
+nav .container .logo h1 {
   font-size: 1.2rem;
   margin-left: 10px;
   font-family: cursive;
   color: #42a6c4;
-
 }
 nav .menu {
   list-style: none;
   display: flex;
   gap: 50px;
-  align-items:center;
+  align-items: center;
   margin-right: 20px;
 }
 nav .menu button {
@@ -226,7 +225,7 @@ nav .hamburger {
 .authPage .container form .inputTag div input,
 .authPage .container form .inputTag div select {
   padding: 8px;
-  
+
   width: 100%;
   height: 100%;
 }
@@ -254,7 +253,7 @@ nav .hamburger {
   transition: background-color 0.3s ease;
 }
 .authPage .container form button:hover {
-  background-color: #378CE7; 
+  background-color: #378ce7;
 }
 .authPage .container form a {
   padding: 12px;
@@ -265,7 +264,7 @@ nav .hamburger {
   font-size: 1.2rem;
   text-decoration: none;
 }
-.authPage .container form p{
+.authPage .container form p {
   font-size: 1rem;
   text-align: center;
 }
@@ -338,7 +337,7 @@ footer div {
 }
 
 .footerShow {
-  background: #0C359E;
+  background: #0c359e;
   display: flex;
   justify-content: space-between;
   padding: 25px 120px;
@@ -371,7 +370,6 @@ footer div {
   flex-direction: column;
   padding-top: 10px;
   text-align: center;
- 
 }
 .heroSection .container,
 .heroSection .details {
@@ -499,7 +497,7 @@ footer div {
     max-width: 100%;
   }
 
-/* How it works   */
+  /* How it works   */
 }
 .howitworks {
   background: #fff;
@@ -515,10 +513,10 @@ footer div {
   gap: 30px;
   text-align: center;
 }
-.howitworks .container h1{
+.howitworks .container h1 {
   font-size: 2.8rem;
 }
-.howitworks .container h2{
+.howitworks .container h2 {
   font-size: 1.2rem;
 }
 .howitworks .container .banner {
@@ -580,9 +578,9 @@ footer div {
   padding: 50px 0;
   gap: 35px;
 }
-.categories h1{
-font-size: 2.5rem;
-text-align: center;
+.categories h1 {
+  font-size: 2.5rem;
+  text-align: center;
 }
 .categories .banner {
   display: flex;
@@ -642,13 +640,13 @@ text-align: center;
 }
 
 /* Top Companies */
-.companies .container{
+.companies .container {
   margin-bottom: 30px;
 }
-.companies .container h1{
+.companies .container h1 {
   font-size: 2.5rem;
-text-align: center;
-margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 @keyframes moveRightToLeft {
@@ -666,9 +664,9 @@ margin-bottom: 30px;
 }
 
 .companies .card {
-  width: 300px; 
-  margin-right: 20px; 
-  animation: moveRightToLeft 10s linear infinite; 
+  width: 300px;
+  margin-right: 20px;
+  animation: moveRightToLeft 10s linear infinite;
 }
 
 .companies .container .banner .card:hover {
@@ -699,7 +697,6 @@ margin-bottom: 30px;
     width: 100%;
   }
 }
-
 
 .jobs {
   min-height: 100vh;
@@ -756,7 +753,7 @@ margin-bottom: 30px;
   text-decoration: none;
   padding: 7px;
   font-size: 20px;
-  color: #0C359E;
+  color: #0c359e;
   background: rgb(233, 249, 255);
   width: 100%;
   display: block;
@@ -810,7 +807,7 @@ margin-bottom: 30px;
   width: fit-content;
   text-align: center;
   padding: 10px 20px;
-  background-color: #0C359E;
+  background-color: #0c359e;
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -860,7 +857,7 @@ margin-bottom: 30px;
   outline: none;
 }
 .application .container form button {
-  background-color: #0C359E;
+  background-color: #0c359e;
   color: rgb(233, 249, 255);
   font-size: 20px;
   font-weight: 400;
@@ -1265,10 +1262,7 @@ margin-bottom: 30px;
   }
 }
 
-
-
-
-.resume-model {
+.resume-modal {
   width: 100%;
   display: flex;
   background: #000;
@@ -1277,7 +1271,7 @@ margin-bottom: 30px;
   top: 0;
   left: 0;
 }
-.resume-model .model-content {
+.resume-modal .modal-content {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1285,22 +1279,22 @@ margin-bottom: 30px;
   justify-content: center;
   position: relative;
 }
-.resume-model .model-content .close {
+.resume-modal .modal-content .close {
   position: absolute;
   right: 36px;
   top: 35px;
   font-size: 50px;
   color: #42a6c4;
 }
-.resume-model .model-content .close:hover {
+.resume-modal .modal-content .close:hover {
   cursor: pointer;
 }
-.resume-model .model-content img {
+.resume-modal .modal-content img {
   max-width: 550px;
   height: auto;
 }
 @media (max-width: 1130px) {
-  .resume-model {
+  .resume-modal {
     z-index: 11;
   }
 }

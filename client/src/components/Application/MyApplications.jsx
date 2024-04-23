@@ -8,7 +8,7 @@ import Resume from "./Resume";
 const MyApplications = () => {
   const { user } = useContext(Context);
   const [applications, setApplications] = useState([]);
-  const [modelOpen, setModelOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [resumeImageUrl, setResumeImageUrl] = useState("");
 
   const { isAuthorized } = useContext(Context);
@@ -59,13 +59,13 @@ const MyApplications = () => {
     }
   };
 
-  const openModel = (imageUrl) => {
+  const openModal = (imageUrl) => {
     setResumeImageUrl(imageUrl);
-    setModelOpen(true);
+    setModalOpen(true);
   };
 
-  const closeModel = () => {
-    setModelOpen(false);
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -85,7 +85,7 @@ const MyApplications = () => {
                   element={element}
                   key={element._id}
                   deleteApplication={deleteApplication}
-                  openModel={openModel}
+                  openModal={openModal}
                 />
               );
             })
@@ -104,23 +104,21 @@ const MyApplications = () => {
                 <EmployerCard
                   element={element}
                   key={element._id}
-                  openModel={openModel}
+                  openModal={openModal}
                 />
               );
             })
           )}
         </div>
       )}
-      {modelOpen && (
-        <Resume imageUrl={resumeImageUrl} onClose={closeModel} />
-      )}
+      {modalOpen && <Resume imageUrl={resumeImageUrl} onClose={closeModal} />}
     </section>
   );
 };
 
 export default MyApplications;
 
-const JobSeekerCard = ({ element, deleteApplication, openModel }) => {
+const JobSeekerCard = ({ element, deleteApplication, openModal }) => {
   return (
     <>
       <div className="job_seeker_card">
@@ -145,7 +143,7 @@ const JobSeekerCard = ({ element, deleteApplication, openModel }) => {
           <img
             src={element.resume.url}
             alt="resume"
-            onClick={() => openModel(element.resume.url)}
+            onClick={() => openModal(element.resume.url)}
           />
         </div>
         <div className="btn_area">
@@ -158,7 +156,7 @@ const JobSeekerCard = ({ element, deleteApplication, openModel }) => {
   );
 };
 
-const EmployerCard = ({ element, openModel }) => {
+const EmployerCard = ({ element, openModal }) => {
   return (
     <>
       <div className="job_seeker_card">
@@ -183,7 +181,7 @@ const EmployerCard = ({ element, openModel }) => {
           <img
             src={element.resume.url}
             alt="resume"
-            onClick={() => openModel(element.resume.url)}
+            onClick={() => openModal(element.resume.url)}
           />
         </div>
       </div>

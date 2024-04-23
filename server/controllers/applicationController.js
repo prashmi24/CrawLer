@@ -1,7 +1,7 @@
 import {catchAsyncError} from '../middlewares/catchAsyncError.js';
 import ErrorHandler from '../middlewares/error.js';
-import { Application } from '../models/application.js';
-import {Job} from '../models/job.js';
+import { Application } from '../modals/application.js';
+import {Job} from '../modals/job.js';
 import cloudinary from 'cloudinary';
 
 // Employer requesting all the applications
@@ -35,7 +35,7 @@ export const jobSeekerGetAllApplications= catchAsyncError(async(req, res, next) 
 //Job Seeker wants to delete the application
 export const jobSeekerDeleteApplication = catchAsyncError(async(req, res, next) =>{
     const{role} = req.user;
-    if(role=== "Employer"){
+    if(role === "Employer"){
         return next(new ErrorHandler("Employer is not allowed to access this resources", 400));
     }
     const{id}=req.params;
@@ -64,11 +64,12 @@ export const postApplication = catchAsyncError(async(req, res, next)=>{
     if(!allowedFormats.includes(resume.mimetype)){
         return next(new ErrorHandler("Invalid file type. Please upload a PDF file", 400));
     }
-    const cloudinaryResponse = await cloudinary.uploader.upload(
+    try {
+        const cloudinaryResponse = await cloudinary.uploader.upload(
         resume.tempFilePath
     );
     if(!cloudinaryResponse || cloudinaryResponse.error){
-        console.error("Cloudinary Error:", cloudinaryResponse || "Unknown Error");
+        console.error("Cloudinary Error:", cloudinaryResponse && cloudinaryResponse.error || "Unknown Error");
         return next(new ErrorHandler("Failed to upload resume", 500))
     }
     const {name, email, coverLetter, phone, address, jobId} = req.body;
@@ -79,7 +80,7 @@ export const postApplication = catchAsyncError(async(req, res, next)=>{
     if (!jobId){
         return next(new ErrorHandler("Job not found", 404));
     }
-    const jobDetails = await Job.findBy(jobId);
+    const jobDetails = await Job.findById(jobId);
     if(!jobDetails){
         return next (new ErrorHandler("Job not found", 404));
     }
@@ -87,12 +88,12 @@ export const postApplication = catchAsyncError(async(req, res, next)=>{
         user: jobDetails.postedBy,
         role: "Employer"
     };
-    if ( !name || !email || !coverLetter || !phone || !address || !applicantID || !employerID || !resume){
+    if (!name || !email || !coverLetter || !phone || !address) {
         return next(new ErrorHandler("Please fill all fields.", 400));
     }
     const application = await Application.create({
-        name, email, coverLetter, phone, address, applicantID, employerID, 
-        resume:{
+        name, email, coverLetter, phone, address, applicantID, employerID,
+        resume: {
             public_id: cloudinaryResponse.public_id,
             url: cloudinaryResponse.secure_url
         },
@@ -102,5 +103,8 @@ export const postApplication = catchAsyncError(async(req, res, next)=>{
         message: "Application Submitted",
         application,
     });
+} catch (error) {
+    return next(new ErrorHandler("Failed to upload resume", 500));
+}
 });
 

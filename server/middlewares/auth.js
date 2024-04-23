@@ -1,4 +1,4 @@
-import {User} from '../models/user.js';
+import {User} from '../modals/user.js';
 import { catchAsyncError } from './catchAsyncError.js';
 import ErrorHandler from './error.js';
 import jwt from 'jsonwebtoken';

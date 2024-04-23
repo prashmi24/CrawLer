@@ -1,6 +1,6 @@
 import {catchAsyncError} from '../middlewares/catchAsyncError.js';
 import ErrorHandler from '../middlewares/error.js';
-import {Job} from '../models/job.js';
+import {Job} from '../modals/job.js';
 
 //searching all posted jobs
 export const getAllJobs = catchAsyncError(async(req, res, next)=>{

@@ -34,8 +34,8 @@ const Login = () => {
     }
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to={"/"} />;
   }
 
   return (
@@ -52,11 +52,9 @@ const Login = () => {
               <label>Login As:</label>
               <div>
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">Select Role</option>
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
-               
               </div>
             </div>
             <div className="inputTag">
@@ -68,9 +66,9 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-              
               </div>
             </div>
+
             <div className="inputTag">
               <label>Password:</label>
               <div>
@@ -80,14 +78,14 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-               
               </div>
             </div>
             <button type="submit" onClick={handleLogin}>
               Login
             </button>
-            <p>Don't have an account? <Link to={"/register"}>Sign Up</Link></p>
-            
+            <p>
+              Don't have an account? <Link to={"/register"}>Sign Up</Link>
+            </p>
           </form>
         </div>
         <div className="banner">
