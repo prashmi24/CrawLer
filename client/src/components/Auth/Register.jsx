@@ -26,7 +26,11 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      toast.success(data.message);
+      if (response.data) {
+        toast.success(response.data.message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
       setName("");
       setEmail("");
       setPassword("");
@@ -50,7 +54,7 @@ const Register = () => {
             <img src="/logo.png" alt="logo" />
             <h2>Join as a recruiter, job seeker or hiring manager</h2>
           </div>
-          <form>
+          <form onSubmit={handleRegister}>
             <div className="inputTag">
               <label>Register As:</label>
               <div>
@@ -104,9 +108,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <button type="submit" onClick={handleRegister}>
-              Register
-            </button>
+            <button type="submit">Register</button>
             <p>
               Been here before?
               <Link to={"/login"}> Login</Link>

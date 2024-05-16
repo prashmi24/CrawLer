@@ -5,7 +5,7 @@ import { FaFacebookF, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 
 const Footer = () => {
-  const {isAuthorized} = useContext(Context);
+  const { isAuthorized } = useContext(Context);
   return (
     <footer className={isAuthorized ? "footerShow" : "footerHide"}>
       <div> &#169; 2024 Crawler</div>
@@ -26,6 +26,5 @@ const Footer = () => {
     </footer>
   );
 };
-
 
 export default Footer;
