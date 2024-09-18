@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../main";
@@ -12,9 +12,16 @@ const Application = () => {
   const [address, setAddress] = useState("");
   const [resume, setResume] = useState(null);
 
+  const fileInputRef = useRef(null);
   const { isAuthorized, user } = useContext(Context);
-
   const navigateTo = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (!isAuthorized || (user && user.role === "Employer")) {
+      navigateTo("/");
+    }
+  }, [isAuthorized, user, navigateTo]);
 
   // Function to handle file input changes
   const handleFileChange = (event) => {
@@ -22,9 +29,14 @@ const Application = () => {
     setResume(resume);
   };
 
-  const { id } = useParams();
   const handleApplication = async (e) => {
     e.preventDefault();
+
+    if (!name || !email || !phone || !resume) {
+      toast.error("Please fill in all required fields!");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -40,9 +52,6 @@ const Application = () => {
         formData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
         }
       );
       setName("");
@@ -50,17 +59,16 @@ const Application = () => {
       setCoverLetter("");
       setPhone("");
       setAddress("");
-      setResume("");
+      setResume(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
       toast.success(data.message);
       navigateTo("/job/getall");
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong!";
+      toast.error(errorMessage);
     }
   };
-
-  if (!isAuthorized || (user && user.role === "Employer")) {
-    navigateTo("/");
-  }
 
   return (
     <section className="application">
@@ -80,7 +88,7 @@ const Application = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            type="number"
+            type="tel"
             placeholder="Your Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -106,6 +114,7 @@ const Application = () => {
               type="file"
               accept=".pdf"
               onChange={handleFileChange}
+              ref={fileInputRef}
               style={{ width: "100%" }}
             />
           </div>
