@@ -9,9 +9,9 @@ const Register = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("Job Seeker");
 
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const { isAuthorized, setIsAuthorized } = useContext(Context);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -26,24 +26,21 @@ const Register = () => {
           withCredentials: true,
         }
       );
-      if (response.data) {
-        toast.success(response.data.message);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      toast.success(data.message);
       setName("");
       setEmail("");
       setPassword("");
       setPhone("");
-      setRole("");
+      setRole("Job Seeker");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMsg = error.response?.data?.message || "Something went wrong";
+      toast.error(errorMsg);
     }
   };
 
   if (isAuthorized) {
-    return <Navigate to={"/"} />;
+    return <Navigate to="/" />;
   }
 
   return (
@@ -58,7 +55,11 @@ const Register = () => {
             <div className="inputTag">
               <label>Register As:</label>
               <div>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  aria-label="Role selection"
+                >
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
@@ -72,6 +73,8 @@ const Register = () => {
                   placeholder="Your Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
+                  aria-label="Name input"
                 />
               </div>
             </div>
@@ -80,9 +83,11 @@ const Register = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="employer@gmail.com"
+                  placeholder="hello@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                  aria-label="Email input"
                 />
               </div>
             </div>
@@ -94,6 +99,8 @@ const Register = () => {
                   placeholder="Your Phone Number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  required
+                  aria-label="Phone number input"
                 />
               </div>
             </div>
@@ -105,6 +112,8 @@ const Register = () => {
                   placeholder="Your Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
+                  aria-label="Password input"
                 />
               </div>
             </div>

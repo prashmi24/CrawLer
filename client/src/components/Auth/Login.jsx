@@ -7,7 +7,7 @@ import { Context } from "../../main";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("Job Seeker");
 
   const { isAuthorized, setIsAuthorized } = useContext(Context);
 
@@ -27,10 +27,10 @@ const Login = () => {
       toast.success(data.message);
       setEmail("");
       setPassword("");
-      setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMsg = error.response?.data?.message || "Something went wrong";
+      toast.error(errorMsg);
     }
   };
 
@@ -47,11 +47,15 @@ const Login = () => {
             <h2>Welcome back! Let's find Jobs for you </h2>
             <h3>Please enter your details!</h3>
           </div>
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="inputTag">
               <label>Login As:</label>
               <div>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  aria-label="Role Selection"
+                >
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
@@ -62,9 +66,11 @@ const Login = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="employer@gmail.com"
+                  placeholder="hello@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                  aria-label="Email input"
                 />
               </div>
             </div>
@@ -77,12 +83,12 @@ const Login = () => {
                   placeholder="Your Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
+                  aria-label="Password input"
                 />
               </div>
             </div>
-            <button type="submit" onClick={handleLogin}>
-              Login
-            </button>
+            <button type="submit">Login</button>
             <p>
               Don't have an account? <Link to={"/register"}>Sign Up</Link>
             </p>
