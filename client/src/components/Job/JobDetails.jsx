@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../../main";
+import { format } from "date-fns";
 
 const JobDetails = () => {
   const { id } = useParams();
-  const [job, setJob] = useState({});
+  const [job, setJob] = useState(null);
   const navigateTo = useNavigate();
-
   const { isAuthorized, user } = useContext(Context);
 
   useEffect(() => {
+    if (!isAuthorized) {
+      navigateTo("/login");
+      return;
+    }
+
     axios
       .get(`http://localhost:4000/api/v1/job/${id}`, {
         withCredentials: true,
@@ -22,16 +26,23 @@ const JobDetails = () => {
       .catch((error) => {
         navigateTo("/notfound");
       });
-  }, []);
+  }, [id, isAuthorized, navigateTo]);
 
-  if (!isAuthorized) {
-    navigateTo("/login");
+  if (!job) {
+    return <p>Loading job details...</p>;
   }
+
+  // Format the job posted date
+  const formattedDate = job.jobPostedOn
+    ? format(new Date(job.jobPostedOn), "MMMM dd, yyyy")
+    : "N/A";
 
   return (
     <section className="jobDetail page">
       <div className="container">
-      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Job Details</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Job Details
+        </h2>
         <div className="banner">
           <p>
             <span> {job.title}</span>
@@ -52,10 +63,10 @@ const JobDetails = () => {
             About: <span>{job.description}</span>
           </p>
           <p>
-            Job Posted On: <span>{job.jobPostedOn}</span>
+            Job Posted On: <span>{formattedDate}</span>
           </p>
           <p>
-            Salary: {" "}
+            Salary:{" "}
             {job.fixedSalary ? (
               <span>{job.fixedSalary}</span>
             ) : (
@@ -64,10 +75,12 @@ const JobDetails = () => {
               </span>
             )}
           </p>
-          {user && user.role === "Employer" ? (
-            <></>
-          ) : (
-            <Link to={`/application/${job._id}`}>Apply Now</Link>
+
+          {/* Conditional rendering for applying */}
+          {user?.role === "Job Seeker" && (
+            <Link to={`/application/${job._id}`} className="apply-link">
+              Apply Now
+            </Link>
           )}
         </div>
       </div>
