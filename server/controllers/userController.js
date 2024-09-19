@@ -9,13 +9,13 @@ export const register = catchAsyncError(async (req, res, next) => {
 
   //  required field is missing while registering
   if (!name || !email || !phone || !password || !role) {
-    return next(new ErrorHandler("Please fill all required information"));
+    return next(new ErrorHandler("Please fill all required information", 400));
   }
 
   //registering with already existing email
   const isEmail = await User.findOne({ email });
   if (isEmail) {
-    return next(new ErrorHandler("User already exists!"));
+    return next(new ErrorHandler("User already exists!", 400));
   }
   const user = await User.create({
     name,
@@ -54,18 +54,18 @@ export const login = catchAsyncError(async (req, res, next) => {
   if (user.role !== role) {
     return next(new ErrorHandler("User with this role not found", 400));
   }
-  sendTokens(user, 201, res, "User Logged In!");
+  sendTokens(user, 201, res, "User Logged In Successfully!");
 });
 
 //User Logout
 export const logout = catchAsyncError(async (req, res, next) => {
   res
-    .status(201)
+    .status(200)
     .cookie("token", "", {
       httpOnly: true,
       expires: new Date(Date.now()),
-      secure: true,
-      sameSite: "None",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     })
     .json({
       success: true,
