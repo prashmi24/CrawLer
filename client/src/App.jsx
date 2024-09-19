@@ -23,7 +23,8 @@ import axios from "axios";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+  const { setIsAuthorized, setUser } = useContext(Context);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,11 +39,11 @@ const App = () => {
       }
     };
     fetchUser();
-  }, [isAuthorized]);
+  }, []);
 
   return (
     <>
-      <BrowserRouter>
+      <Router>
         <Navbar />
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -58,7 +59,7 @@ const App = () => {
         </Routes>
         <Footer />
         <Toaster />
-      </BrowserRouter>
+      </Router>
     </>
   );
 };
