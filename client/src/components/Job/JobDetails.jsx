@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../main";
-import { format } from "date-fns";
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -32,11 +31,6 @@ const JobDetails = () => {
     return <p>Loading job details...</p>;
   }
 
-  // Format the job posted date
-  const formattedDate = job.jobPostedOn
-    ? format(new Date(job.jobPostedOn), "MMMM dd, yyyy")
-    : "N/A";
-
   return (
     <section className="jobDetail page">
       <div className="container">
@@ -63,7 +57,7 @@ const JobDetails = () => {
             About: <span>{job.description}</span>
           </p>
           <p>
-            Job Posted On: <span>{formattedDate}</span>
+            Job Posted On: <span>{job.jobPostedOn}</span>
           </p>
           <p>
             Salary:{" "}
