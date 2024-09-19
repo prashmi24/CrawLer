@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../main";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -26,6 +26,21 @@ const Navbar = () => {
     }
   };
 
+  const renderEmployerLinks = () => (
+    <>
+      <li>
+        <Link to={"/job/post"} onClick={() => setShow(false)}>
+          For Recruiters
+        </Link>
+      </li>
+      <li>
+        <Link to={"/job/me"} onClick={() => setShow(false)}>
+          View Your Jobs
+        </Link>
+      </li>
+    </>
+  );
+
   return (
     <nav className={isAuthorized ? "navbarShow" : "navbarHide"}>
       <div className="container">
@@ -33,7 +48,7 @@ const Navbar = () => {
           <img src="/logo.png" alt="logo" />
           <h1>CrawLer</h1>
         </div>
-        <ul className={!show ? "menu" : "show-menu menu"}>
+        <ul className={`menu ${show ? "show-menu" : ""}`}>
           <li>
             <Link to={"/"} onClick={() => setShow(false)}>
               Home
@@ -51,27 +66,15 @@ const Navbar = () => {
                 : "My Applications"}
             </Link>
           </li>
-          {user && user.role === "Employer" ? (
-            <>
-              <li>
-                <Link to={"/job/post"} onClick={() => setShow(false)}>
-                  For Recruiters
-                </Link>
-              </li>
-              <li>
-                <Link to={"/job/me"} onClick={() => setShow(false)}>
-                  View Your Jobs
-                </Link>
-              </li>
-            </>
-          ) : (
-            <></>
-          )}
+          {user && user.role === "Employer" && renderEmployerLinks()}
 
           <button onClick={handleLogout}>Logout</button>
         </ul>
         <div className="hamburger">
-          <GiHamburgerMenu onClick={() => setShow(!show)} />
+          <GiHamburgerMenu
+            aria-label="Toggle Menu"
+            onClick={() => setShow(!show)}
+          />
         </div>
       </div>
     </nav>
