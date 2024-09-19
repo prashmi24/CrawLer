@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/application.js";
 import { Job } from "../models/job.js";
 import cloudinary from "cloudinary";
+import fs from "fs";
 
 // Employer requesting all the applications
 export const employerGetAllApplications = catchAsyncError(
@@ -105,8 +107,8 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
       user: req.user._id,
       role: "Job Seeker",
     };
-    if (!jobId) {
-      return next(new ErrorHandler("Job not found", 404));
+    if (!jobId || !mongoose.Types.ObjectId.isValid(jobId)) {
+      return next(new ErrorHandler("Invalid Job ID", 404));
     }
     const jobDetails = await Job.findById(jobId);
     if (!jobDetails) {
@@ -132,6 +134,8 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
         url: cloudinaryResponse.secure_url,
       },
     });
+    fs.unlinkSync(resume.tempFilePath);
+
     res.status(200).json({
       success: true,
       message: "Application submitted successfully",
